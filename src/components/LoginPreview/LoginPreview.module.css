@@ -1,0 +1,50 @@
+.wrapper {
+	@apply w-full
+	h-full 
+	absolute
+	
+	z-10;
+}
+
+.preview {
+	@apply grid
+	grid-rows-[6fr_5fr]
+	/* justify-center */
+
+	z-20;
+}
+
+.logo {
+	@apply w-[25%]
+	place-self-end
+	justify-self-center
+
+	drop-shadow-[0px_0px_1px_#e2e8f0]
+	
+	animate-[logo-spin_20s_linear_infinite];
+}
+
+@keyframes logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.title {
+	@apply w-full
+	
+	text-[calc(12px+4vw)]
+	text-center
+	text-slate-200
+	drop-shadow-[0px_0px_1px_#e2e8f0]
+	font-extrabold
+	font-[Libre]
+	italic
+
+	place-self-start
+
+	my-12;
+}

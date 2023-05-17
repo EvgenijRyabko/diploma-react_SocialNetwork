@@ -3,56 +3,5 @@
 	min-h-screen 
 	
 	grid
-	grid-cols-[5fr_6fr];
-}
-
-.wrapper {
-	@apply w-full
-	h-full 
-	absolute
-	
-	z-10;
-}
-
-.preview {
-	@apply grid
-	grid-rows-[4fr_6fr]
-	justify-center
-
-	z-20;
-}
-
-.logo {
-	@apply w-4/6
-	place-self-end
-	justify-self-center
-
-	drop-shadow-[0px_0px_1px_#e2e8f0]
-	
-	animate-[logo-spin_20s_linear_infinite];
-}
-
-@keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
-
-.title {
-	@apply w-full
-	
-	text-[calc(64px+1vw)]
-	text-center
-	text-slate-200
-	drop-shadow-[0px_0px_1px_#e2e8f0]
-	font-extrabold
-	font-[Libre]
-	italic
-
-	place-self-start
-
-	my-10;
+	grid-cols-[8fr_5fr];
 }

@@ -1,0 +1,15 @@
+.container {
+	@apply rounded-md bg-[#607d8b];
+}
+
+.list {
+	@apply w-full text-center;
+}
+
+.item {
+	@apply my-2 font-semibold text-slate-100 text-[calc(30px+1vw)] transition duration-300;
+}
+
+.item:hover {
+	@apply text-amber-400 scale-110;
+}

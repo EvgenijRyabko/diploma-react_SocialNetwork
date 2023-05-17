@@ -2,19 +2,24 @@
 	@apply grid
 	grid-rows-[6fr_3fr]
 	
-	w-5/6
+	w-[70%]
 	h-[90%]
 	
 	rounded-md
 	
 	bg-slate-100
+
+	border-2
+	border-[#3f4bce]
 	
-	shadow-[0px_0px_10px_#e2e8f0]
+	/* shadow-[0px_0px_10px_#8980ff] */
 	
-	justify-self-center
+	justify-self-start
 	place-self-center
 	
 	z-20;
+
+	/* background:#3f4bce; */
 }
 
 .inputAreas {
@@ -40,12 +45,14 @@
 	bg-transparent
 	
 	text-slate-600
+	text-[calc(8px+1vw)]
 	
 	outline-none;
 }
 
 .inputAreas input::placeholder {
-	@apply text-slate-500;
+	@apply text-slate-500
+	text-[calc(8px+1vw)];
 }
 
 .button {
@@ -63,6 +70,8 @@
 	place-self-center
 	
 	text-slate-600
+	text-[calc(8px+1vw)]
+
 	font-semibold
 	
 	transition
