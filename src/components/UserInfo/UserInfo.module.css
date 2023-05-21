@@ -1,0 +1,7 @@
+.profileImageInput {
+	@apply rounded-md bg-transparent outline-none border-2 border-slate-600 justify-self-center place-self-center w-full;
+}
+
+.profileImageInput:file {
+	@apply rounded-md bg-transparent outline-none border-2 border-slate-600 justify-self-center place-self-center w-full;
+}

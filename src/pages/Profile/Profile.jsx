@@ -52,7 +52,7 @@ function Profile() {
     <div className="grid grid-cols-[2fr_10fr] gap-6 p-4 min-h-screen min-w-full bg-[#455a64] text-slate-100">
       <NavBar />
       <section className="flex flex-wrap">
-        <UserInfo userData={userData} />
+        <UserInfo userData={userData} isOwner={isOwner} />
         <div className="rounded-md bg-[#607d8b] w-full m-[16px_0_0_0]">
           <header className="m-4 text-[calc(36px+1vw)]">Posts</header>
           {isOwner && (
