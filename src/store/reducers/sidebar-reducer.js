@@ -1,6 +1,11 @@
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+const userId = cookies.get('id-user');
+
 const initialState = [
   {
-    to: '/profile',
+    to: `/profile/${userId}`,
     text: 'Profile',
   },
   {

@@ -1,27 +1,22 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import classes from './LoginForm.module.css';
 
-function LoginForm() {
-  const navigate = useNavigate();
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    navigate('/profile');
-  };
-
+function LoginForm({ signIn = (f) => f, setPassword = (f) => f, setLogin = (f) => f }) {
   return (
     <form className={classes.form}>
       <div className={classes.inputAreas}>
-        <input placeholder="Введите логин" type="text" />
-        <input placeholder="Введите пароль" type="password" />
+        <input placeholder="Введите логин" type="text" onChange={(e) => setLogin(e.target.value)} />
+        <input
+          placeholder="Введите пароль"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
       <button
         className={classes.button}
         type="submit"
         onClick={(e) => {
-          onSubmit(e);
+          signIn(e);
         }}
       >
         Sign in

@@ -24,7 +24,6 @@ export const usersReducer = createSlice({
   extraReducers: {
     // ****** Get posts by user id **************************
     [getUsers.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.users = action.payload;
       defaultFulfilledReducer(state);
     },
