@@ -8,17 +8,8 @@ function UserInfo({ userData, isOwner }) {
   const [profileImg, setProfileImg] = useState([]);
 
   const onSendProfile = async () => {
-    const formData = new FormData();
-    for (let i = 0; i < profileImg.length; i++) {
-      formData.append('file', profileImg[i]);
-    }
-
-    console.log(formData);
-
-    await dispatch(postProfileImage({ id: userData.id, file: formData }));
+    await dispatch(postProfileImage({ id: userData.id, images: profileImg }));
   };
-
-  console.log(profileImg);
 
   return (
     <div className="grid grid-cols-[2fr_7fr] rounded-md bg-[#607d8b] w-full min-h-[300px]">

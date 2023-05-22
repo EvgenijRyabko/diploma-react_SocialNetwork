@@ -30,7 +30,7 @@ function Profile() {
       setUserData(...userPayload);
       setPosts(postsPayload);
     })();
-  }, []);
+  }, [userId]);
 
   const onPostCreate = async () => {
     await dispatch(createPost({ id: userId, header: postCreate.header, text: postCreate.text }));
@@ -49,7 +49,7 @@ function Profile() {
   };
 
   return (
-    <div className="grid grid-cols-[2fr_10fr] gap-6 p-4 min-h-screen min-w-full bg-[#455a64] text-slate-100">
+    <form className="grid grid-cols-[2fr_10fr] gap-6 p-4 min-h-screen min-w-full bg-[#455a64] text-slate-100">
       <NavBar />
       <section className="flex flex-wrap">
         <UserInfo userData={userData} isOwner={isOwner} />
@@ -79,7 +79,7 @@ function Profile() {
       <HelmetProvider>
         <Helmet title={userData.name} />
       </HelmetProvider>
-    </div>
+    </form>
   );
 }
 

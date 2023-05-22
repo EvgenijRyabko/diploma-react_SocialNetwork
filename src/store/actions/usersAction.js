@@ -23,12 +23,21 @@ export const getUserById = createAsyncThunk('users/getUserById', async (id, thun
 
 export const postProfileImage = createAsyncThunk(
   'users/postProfileImage',
-  async ({ id, file }, thunkApi) => {
+  async ({ id, images }, thunkApi) => {
     try {
+      if (!images) throw 'Файлы не выбраны!';
+
+      const formData = new FormData();
+      for (let i = 0; i < images.length; i++) {
+        formData.append('file', images[i]);
+      }
+
+      console.log(images);
+
       const response = await axios({
         method: 'post',
         url: `${baseurl}/api/users/uploadProfile/${id}`,
-        data: file,
+        data: formData,
       });
       return response.data;
     } catch (e) {
