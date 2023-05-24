@@ -12,8 +12,11 @@ function UserInfo({ userData, isOwner }) {
   };
 
   return (
-    <div className="grid grid-cols-[2fr_7fr] rounded-md bg-[#607d8b] w-full min-h-[300px]">
-      <div className="grid grid-rows-[8fr_2fr]">
+    <form
+      encType="multipart/form-data"
+      className="grid grid-cols-[2fr_7fr] rounded-md bg-[#607d8b] w-full min-h-[300px]"
+    >
+      <div className="grid grid-rows-[8fr_4fr]">
         <img alt="userLogo" />
         {isOwner && (
           <div className="p-2">
@@ -23,6 +26,7 @@ function UserInfo({ userData, isOwner }) {
               id="formFileSm"
               type="file"
               multiple="multiple"
+              name="photo"
               accept=".jpg, .jpeg, .png"
               onChange={(e) => setProfileImg(e.target.files)}
             />
@@ -37,7 +41,7 @@ function UserInfo({ userData, isOwner }) {
         <p>{userData?.status || ''}</p>
         <p>{userData['birth-date'] || ''}</p>
       </div>
-    </div>
+    </form>
   );
 }
 

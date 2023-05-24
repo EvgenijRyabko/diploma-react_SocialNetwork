@@ -11,7 +11,9 @@ function NavBar() {
       <ul className={classes.list}>
         {navigation.map((el, id) => (
           <li key={id} className={classes.item}>
-            <NavLink to={el.to}>{el.text}</NavLink>
+            <NavLink className={classes.navText} to={el.to}>
+              {el.text}
+            </NavLink>
           </li>
         ))}
       </ul>

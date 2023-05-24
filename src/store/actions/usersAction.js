@@ -29,15 +29,15 @@ export const postProfileImage = createAsyncThunk(
 
       const formData = new FormData();
       for (let i = 0; i < images.length; i++) {
-        formData.append('file', images[i]);
+        formData.append('photo', images[i]);
       }
 
-      console.log(images);
+      for (var p of formData) {
+        console.log(p);
+      }
 
-      const response = await axios({
-        method: 'post',
-        url: `${baseurl}/api/users/uploadProfile/${id}`,
-        data: formData,
+      const response = await axios.post(`${baseurl}/api/users/uploadProfile/${id}`, {
+        formData,
       });
       return response.data;
     } catch (e) {

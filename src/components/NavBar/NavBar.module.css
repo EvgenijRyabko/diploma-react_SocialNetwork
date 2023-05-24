@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap");
+
 .container {
 	@apply rounded-md bg-[#607d8b];
 }
@@ -7,9 +9,15 @@
 }
 
 .item {
-	@apply my-2 font-semibold text-slate-100 text-[calc(30px+1vw)] transition duration-300;
+	@apply my-10 font-semibold text-slate-100 transition duration-300;
 }
 
 .item:hover {
 	@apply text-amber-400 scale-110;
+}
+
+.navText {
+	@apply text-xl
+	font-['Hind_Siliguri']
+	tracking-wider;
 }
