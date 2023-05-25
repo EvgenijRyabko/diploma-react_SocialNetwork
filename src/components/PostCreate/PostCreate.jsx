@@ -15,10 +15,10 @@ function PostCreate({ postCreate, setPostCreate = (f) => f, onPostCreate = (f) =
       />
       <button
         type="button"
-        className="w-2/6 border-2 border-[#455a64] place-self-center rounded-md"
+        className="w-2/6 border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-200 duration-300 font-semibold text-2xl place-self-center rounded-md tracking-wider"
         onClick={() => onPostCreate()}
       >
-        Post
+        Опубликовать
       </button>
     </section>
   );

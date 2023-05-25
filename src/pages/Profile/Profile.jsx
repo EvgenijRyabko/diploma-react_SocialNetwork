@@ -8,6 +8,7 @@ import { getUserById } from '../../store/actions/usersAction';
 import NavBar from '../../components/NavBar/NavBar';
 import PostCreate from '../../components/PostCreate/PostCreate';
 import UserInfo from '../../components/UserInfo/UserInfo';
+import defaultAvatar from '../../assets/defaultAvatar.svg';
 import classes from './Profile.module.css';
 
 function Profile() {
@@ -49,7 +50,7 @@ function Profile() {
   };
 
   return (
-    <div className="grid grid-cols-[2fr_10fr] gap-6 p-4 min-h-screen min-w-full bg-[#455a64] text-slate-100">
+    <div className="grid grid-cols-[2fr_7fr] gap-6 p-4 min-h-screen min-w-full bg-[#455a64] text-slate-100">
       <NavBar />
       <section className="flex flex-wrap">
         <UserInfo userData={userData} isOwner={isOwner} />
@@ -63,12 +64,20 @@ function Profile() {
             />
           )}
           {posts.map((el, id) => (
-            <section key={id} className="grid grid-cols-[8fr_2fr] bg-[#6d91a3] m-4 rounded-md">
+            <section key={id} className="grid grid-cols-[2fr_8fr_2fr] bg-[#6d91a3] m-4 rounded-md">
+              <div className="border-2 border-slate-200 rounded-md m-2">
+                <img src={userData?.image || defaultAvatar} alt="userLogo" />
+              </div>
               <div className="grid grid-rows-[3fr_6fr] p-4">
                 <h3>{el.header}</h3>
                 <p>{el.text}</p>
               </div>
-              <button key={id} type="button" onClick={() => onPostDelete(el.id)}>
+              <button
+                className="text-rose-500 font-semibold border-2 border-rose-500 w-4/5 h-2/5 rounded-md place-self-center hover:bg-rose-500 hover:text-slate-200 transition duration-300"
+                key={id}
+                type="button"
+                onClick={() => onPostDelete(el.id)}
+              >
                 Delete
               </button>
             </section>
