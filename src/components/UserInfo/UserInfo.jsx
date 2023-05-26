@@ -6,18 +6,21 @@ import classes from './UserInfo.module.css';
 
 function UserInfo({ userData, isOwner }) {
   const dispatch = useDispatch();
-  const [profileImg, setProfileImg] = useState([]);
+  const [profileImg, setProfileImg] = useState();
   const image = null;
 
   const onSendProfile = async () => {
-    await dispatch(postProfileImage({ id: userData.id, images: profileImg }));
+    const formData = new FormData();
+
+    formData.append('file', profileImg);
+
+    await dispatch(postProfileImage({ userId: userData.id, formData }));
   };
 
+  console.log(profileImg);
+
   return (
-    <form
-      encType="multipart/form-data"
-      className="grid grid-cols-[3fr_7fr] rounded-md bg-[#607d8b] w-full min-h-[300px]"
-    >
+    <div className="grid grid-cols-[3fr_7fr] rounded-md bg-[#607d8b] w-full min-h-[300px]">
       <div className="grid grid-rows-[8fr_4fr] p-4">
         <img
           src={image || defaultAvatar}
@@ -25,21 +28,20 @@ function UserInfo({ userData, isOwner }) {
           className="border-2 border-slate-200 rounded-md"
         />
         {isOwner && (
-          <div className="p-2">
+          <form className="p-2" encType="multipart/form-data">
             <label htmlFor="formFileSm" className="mb-2 inline-block text-neutral-300" />
             <input
               className={classes.profileImageInput}
               id="formFileSm"
               type="file"
-              multiple="multiple"
               name="photo"
               accept=".jpg, .jpeg, .png"
-              onChange={(e) => setProfileImg(e.target.files)}
+              onChange={(e) => setProfileImg(e.target.files[0])}
             />
             <button type="button" onClick={onSendProfile}>
               Send
             </button>
-          </div>
+          </form>
         )}
       </div>
       <div className="p-4">
@@ -51,7 +53,7 @@ function UserInfo({ userData, isOwner }) {
           <p>{userData['birth-date'] || '2003.04.05'}</p>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

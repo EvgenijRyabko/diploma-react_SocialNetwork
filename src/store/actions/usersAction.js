@@ -21,23 +21,12 @@ export const getUserById = createAsyncThunk('users/getUserById', async (id, thun
 
 export const postProfileImage = createAsyncThunk(
   'users/postProfileImage',
-  async ({ id, images }, thunkApi) => {
+  async ({ userId, formData }, thunkApi) => {
     try {
-      if (!images) throw 'Файлы не выбраны!';
+      // eslint-disable-next-line guard-for-in
+      console.log([...formData]);
 
-      const formData = new FormData();
-      for (let i = 0; i < images.length; i++) {
-        formData.append('file', images[i]);
-        formData.append('fileName', images[i].name);
-      }
-
-      for (var p of formData) {
-        console.log(p);
-      }
-
-      const response = await axios.post(`/api/users/uploadProfile/${id}`, {
-        formData,
-      });
+      const response = await axios.post(`/api/users/uploadProfile/${userId}`, formData);
       return response.data;
     } catch (e) {
       return thunkApi.rejectWithValue(e?.response?.data || 'Произошла непредвиденная ошибка');
