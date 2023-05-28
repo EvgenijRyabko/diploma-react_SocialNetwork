@@ -6,19 +6,23 @@ const userId = cookies.get('id-user');
 const initialState = [
   {
     to: `/profile/${userId}`,
-    text: 'PROFILE',
+    text: 'ГЛАВНАЯ',
   },
   {
     to: '/dialogs',
-    text: 'DIALOGS',
+    text: 'ДИАЛОГИ',
+  },
+  {
+    to: '/friends',
+    text: 'ДРУЗЬЯ',
   },
   {
     to: '/users',
-    text: 'USERS',
+    text: 'ПОЛЬЗОВАТЕЛИ',
   },
   {
     to: '/settings',
-    text: 'SETTINGS',
+    text: 'НАСТРОЙКИ',
   },
 ];
 

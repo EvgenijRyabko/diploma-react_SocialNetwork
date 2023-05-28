@@ -11,10 +11,3 @@
 	font-size: 1.3rem;
 	font-family: "Libre";
 }
-
-.root {
-	@apply min-h-screen
-	min-w-full
-
-	bg-[#455a64];
-}

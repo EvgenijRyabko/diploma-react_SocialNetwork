@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUsers, getUserById, postProfileImage } from '../actions/usersAction';
+import { getUsers, getUserById, postProfileImage, getUserFollowers } from '../actions/usersAction';
 
 const initialState = {
   users: [],
@@ -43,6 +43,10 @@ export const usersReducer = createSlice({
     [postProfileImage.fulfilled]: defaultFulfilledReducer,
     [postProfileImage.pending]: pendingReducer,
     [postProfileImage.rejected]: rejectedReducer,
+
+    [getUserFollowers.fulfilled]: defaultFulfilledReducer,
+    [getUserFollowers.pending]: pendingReducer,
+    [getUserFollowers.rejected]: rejectedReducer,
   },
 });
 

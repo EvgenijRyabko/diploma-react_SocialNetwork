@@ -9,6 +9,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import PostCreate from '../../components/PostCreate/PostCreate';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
+import Posts from '../../components/Posts/Posts';
 import classes from './Profile.module.css';
 
 function Profile() {
@@ -17,6 +18,7 @@ function Profile() {
   const dispatch = useDispatch();
   const [postCreate, setPostCreate] = useState({ header: '', text: '' });
   const [userData, setUserData] = useState({});
+  const [avatar, setAvatar] = useState({});
   const [posts, setPosts] = useState([]);
 
   const userId = parseInt(location.pathname.split('/').reverse()[0]);
@@ -32,6 +34,12 @@ function Profile() {
       setPosts(postsPayload);
     })();
   }, [userId]);
+
+  useEffect(() => {
+    setAvatar(
+      userData?.profile_img ? import.meta.env.VITE_APP_STORAGE + userData.profile_img : null,
+    );
+  }, [userData]);
 
   const onPostCreate = async () => {
     await dispatch(createPost({ id: userId, header: postCreate.header, text: postCreate.text }));
@@ -50,12 +58,12 @@ function Profile() {
   };
 
   return (
-    <div className="grid grid-cols-[2fr_7fr] gap-6 p-4 min-h-screen min-w-full bg-[#455a64] text-slate-100">
+    <div className="grid grid-cols-[2fr_7fr] gap-6 p-4 min-h-screen min-w-[1200px] bg-[#455a64] text-slate-100">
       <NavBar />
       <section className="flex flex-wrap">
-        <UserInfo userData={userData} isOwner={isOwner} />
-        <div className="rounded-md bg-[#607d8b] w-full m-[16px_0_0_0]">
-          <header className="m-4 text-[calc(36px+1vw)]">Posts</header>
+        <UserInfo userData={userData} userImage={avatar} isOwner={isOwner} setAvatar={setAvatar} />
+        <div className="rounded-md bg-[#607d8b] min-w-full m-[16px_0_0_0]">
+          <header className="my-6 mx-16 text-4xl">Публикации</header>
           {isOwner && (
             <PostCreate
               postCreate={postCreate}
@@ -63,25 +71,12 @@ function Profile() {
               onPostCreate={onPostCreate}
             />
           )}
-          {posts.map((el, id) => (
-            <section key={id} className="grid grid-cols-[2fr_8fr_2fr] bg-[#6d91a3] m-4 rounded-md">
-              <div className="border-2 border-slate-200 rounded-md m-2">
-                <img src={userData?.image || defaultAvatar} alt="userLogo" />
-              </div>
-              <div className="grid grid-rows-[3fr_6fr] p-4">
-                <h3>{el.header}</h3>
-                <p>{el.text}</p>
-              </div>
-              <button
-                className="text-rose-500 font-semibold border-2 border-rose-500 w-4/5 h-2/5 rounded-md place-self-center hover:bg-rose-500 hover:text-slate-200 transition duration-300"
-                key={id}
-                type="button"
-                onClick={() => onPostDelete(el.id)}
-              >
-                Delete
-              </button>
-            </section>
-          ))}
+          <Posts
+            posts={posts}
+            avatar={avatar}
+            defaultAvatar={defaultAvatar}
+            onPostDelete={onPostDelete}
+          />
         </div>
       </section>
 
