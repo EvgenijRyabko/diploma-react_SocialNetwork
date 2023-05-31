@@ -25,7 +25,7 @@ const initialState = {
   error: null,
 };
 
-export const postsReducer = (action, state = initialState) => {
+export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     // Get users actions
     case GET_USER_POSTS:

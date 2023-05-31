@@ -29,7 +29,7 @@ const initialState = {
   error: null,
 };
 
-export const usersReducer = (action, state = initialState) => {
+export const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     // Get all users actions
     case GET_USERS:
