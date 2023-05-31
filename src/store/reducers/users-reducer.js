@@ -1,9 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getUsers, getUserById, postProfileImage, getUserFollowers } from '../actions/usersAction';
+const GET_USERS = 'GET_USERS';
+const GET_USERS_ERROR = 'GET_USERS';
+const GET_USERS_SUCCESS = 'GET_USERS';
 
-const initialState = {
-  users: [],
-};
+const GET_USED_BY_ID = 'GET_USED_BY_ID';
+const GET_USED_BY_ID_ERROR = 'GET_USED_BY_ID';
+const GET_USED_BY_ID_SUCCESS = 'GET_USED_BY_ID';
+
+const ADD_USER = 'ADD_USER';
+const ADD_USER_ERROR = 'ADD_USER';
+const ADD_USER_SUCCESS = 'ADD_USER';
+
+const DELETE_USER = 'DELETE_USER';
+const DELETE_USER_ERROR = 'DELETE_USER';
+const DELETE_USER_SUCCESS = 'DELETE_USER';
 
 const pendingReducer = (state) => {
   state.isLoading = true;
@@ -14,40 +23,48 @@ const rejectedReducer = (state, action) => {
   if (action) state.error = action.payload.error;
 };
 
-const defaultFulfilledReducer = (state) => {
-  rejectedReducer(state);
+const initialState = {
+  users: [],
+  isLoading: false,
+  error: null,
 };
 
-export const usersReducer = createSlice({
-  name: 'users',
-  initialState,
-  extraReducers: {
-    // ****** Get posts by user id **************************
-    [getUsers.fulfilled]: (state, action) => {
-      state.users = action.payload;
-      defaultFulfilledReducer(state);
-    },
-    [getUsers.pending]: pendingReducer,
-    [getUsers.rejected]: rejectedReducer,
+export const usersReducer = (action, state = initialState) => {
+  switch (action.type) {
+    // Get all users actions
+    case GET_USERS:
+      return pendingReducer(state);
+    case GET_USERS_ERROR:
+      return rejectedReducer(state, action);
+    case GET_USERS_SUCCESS:
+      return { ...state, users: action.payload };
 
-    // ****** Create post by user id **************************
-    [getUserById.fulfilled]: defaultFulfilledReducer,
-    [getUserById.pending]: pendingReducer,
-    [getUserById.rejected]: rejectedReducer,
+    // Get users by id actions
+    case GET_USED_BY_ID:
+      return pendingReducer(state);
+    case GET_USED_BY_ID_ERROR:
+      return rejectedReducer(state, action);
+    case GET_USED_BY_ID_SUCCESS:
+      return { ...state };
 
-    // ****** Delete post by id **************************
-    [getUserById.fulfilled]: defaultFulfilledReducer,
-    [getUserById.pending]: pendingReducer,
-    [getUserById.rejected]: rejectedReducer,
+    // Add user actions
+    case ADD_USER:
+      return pendingReducer(state);
+    case ADD_USER_ERROR:
+      return rejectedReducer(state, action);
+    case ADD_USER_SUCCESS:
+      return { ...state };
 
-    [postProfileImage.fulfilled]: defaultFulfilledReducer,
-    [postProfileImage.pending]: pendingReducer,
-    [postProfileImage.rejected]: rejectedReducer,
+    // Delete user actions
+    case DELETE_USER:
+      return pendingReducer(state);
+    case DELETE_USER_ERROR:
+      return rejectedReducer(state, action);
+    case DELETE_USER_SUCCESS:
+      return { ...state };
 
-    [getUserFollowers.fulfilled]: defaultFulfilledReducer,
-    [getUserFollowers.pending]: pendingReducer,
-    [getUserFollowers.rejected]: rejectedReducer,
-  },
-});
-
-export default usersReducer.reducer;
+    // Default action
+    default:
+      return state;
+  }
+};

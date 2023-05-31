@@ -1,17 +1,9 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import sidebarReducer from './reducers/sidebar-reducer';
-import postsReducer from './reducers/posts-reducer';
-import usersReducer from './reducers/users-reducer';
-import authReducer from './reducers/auth-reducer';
+import { createStore, combineReducers, applyMiddleware } from 'react-redux';
+import thunk from 'redux-thunk';
+import usersReducer from '../storeOld/reducers/users-reducer';
 
 const rootReducer = combineReducers({
-  sidebar: sidebarReducer,
-  posts: postsReducer,
   users: usersReducer,
-  authReducer,
 });
 
-export const setupStore = () =>
-  configureStore({
-    reducer: rootReducer,
-  });
+export const store = createStore(rootReducer, applyMiddleware(thunk));

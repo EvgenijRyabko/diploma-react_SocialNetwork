@@ -5,8 +5,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import LoginRoute from '../middlewares/Login.middleware';
 // import PrivateRoute from '../middlewares/Private.middleware';
 
-import NavBar from '../components/NavBar/NavBar';
-
 // Pages
 import Profile from '../pages/Profile/Profile';
 import Login from '../pages/Login/Login';
