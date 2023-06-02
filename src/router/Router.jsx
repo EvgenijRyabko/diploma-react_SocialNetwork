@@ -11,16 +11,26 @@ import Login from '../pages/Login/Login';
 import Dialogs from '../pages/Dialogs/Dialogs';
 import Users from '../pages/Users/Users';
 import Settings from '../pages/Settings/Settings';
+import NavBar from '../components/NavBar/NavBar';
 
 function Router() {
-  return (
-    <BrowserRouter>
+  const App = (
+    <div className="grid grid-cols-[3fr_9fr] gap-6 p-4 min-h-screen min-w-[1200px] bg-[#455a64] text-slate-100">
+      <NavBar />
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/dialogs" element={<Dialogs />} />
         <Route path="/users" element={<Users />} />
         <Route path="/settings" element={<Settings />} />
+      </Routes>
+    </div>
+  );
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/auth" element={<Login />} />
+        <Route path="/*" element={App} />
       </Routes>
     </BrowserRouter>
   );

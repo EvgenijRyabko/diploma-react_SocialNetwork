@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { postProfileImage } from '../../store/actions/usersAction';
-
+import { postProfileImage } from '../../store/actions/usersActions';
 import parseDate from '../../utils/parseDate';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
 import classes from './UserInfo.module.css';
 
-function UserInfo({ userData, userImage, isOwner, setAvatar = (f) => f }) {
+function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => f }) {
   const dispatch = useDispatch();
   const [upload, setUpload] = useState();
 
@@ -17,13 +16,13 @@ function UserInfo({ userData, userImage, isOwner, setAvatar = (f) => f }) {
 
     const res = await dispatch(postProfileImage({ userId: userData.id, formData }));
 
-    setAvatar(import.meta.env.VITE_APP_STORAGE + res.payload);
+    setAvatar(import.meta.env.VITE_APP_STORAGE + res);
   };
 
   return (
-    <div className="grid grid-cols-[3fr_7fr] rounded-md bg-[#607d8b] min-w-full min-h-[300px]">
+    <div className="grid grid-cols-[3fr_7fr] relative rounded-md bg-[#607d8b] min-w-full min-h-[300px]">
       <div className="grid grid-rows-[10fr_3fr] p-4">
-        <div className="border-2 border-slate-200 rounded-md min-w-[400px] min-h-[500px]">
+        <div className="border-2 border-slate-200 rounded-md min-w-[350px] min-h-[400px]">
           <img
             src={userImage || defaultAvatar}
             alt="userLogo"

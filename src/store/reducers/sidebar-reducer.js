@@ -26,6 +26,4 @@ const initialState = [
   },
 ];
 
-const sidebarReducer = (state = initialState, _) => state;
-
-export default sidebarReducer;
+export const sidebarReducer = (state = initialState, _) => state;

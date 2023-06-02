@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import preloaderGif from '../../images/Book.gif';
+import preloaderGif from '../../assets/loading.gif';
 import classes from './Preloader.module.css';
 
 function Preloader({ loading }) {
@@ -27,7 +27,7 @@ function Preloader({ loading }) {
 
   return ReactDOM.createPortal(
     <div>
-      <img src={preloaderGif} alt="preloader-book" />
+      <img src={preloaderGif} alt="preloader" />
       <p className="mt-2">Загрузка{dotted}</p>
     </div>,
     preloaderPortal,

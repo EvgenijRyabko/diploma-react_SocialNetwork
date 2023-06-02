@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import classes from './NavBar.module.css';
 
 function NavBar() {
-  const navigation = useSelector((state) => state.sidebar);
+  const navigation = useSelector((state) => state.navigation);
 
   return (
     <aside className={classes.container}>

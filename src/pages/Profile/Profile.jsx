@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { getPosts, deletePost, createPost } from '../../store/actions/postsAction';
-import { getUserById } from '../../store/actions/usersAction';
+import { getPosts, deletePost, createPost } from '../../store/actions/postsActions';
+import { getUserById } from '../../store/actions/usersActions';
 import NavBar from '../../components/NavBar/NavBar';
 import PostCreate from '../../components/PostCreate/PostCreate';
 import UserInfo from '../../components/UserInfo/UserInfo';
@@ -17,9 +17,14 @@ function Profile() {
   const location = useLocation();
   const dispatch = useDispatch();
   const [postCreate, setPostCreate] = useState({ header: '', text: '' });
-  const [userData, setUserData] = useState({});
   const [avatar, setAvatar] = useState({});
-  const [posts, setPosts] = useState([]);
+  const { posts, isLoading: postsLoading, error: postsError } = useSelector((state) => state.posts);
+  const {
+    currentUser,
+    isLoading: usersLoading,
+    error: usersError,
+  } = useSelector((state) => state.users);
+  // const [posts, setPosts] = useState([]);
 
   const userId = parseInt(location.pathname.split('/').reverse()[0]);
 
@@ -27,63 +32,60 @@ function Profile() {
 
   useEffect(() => {
     (async () => {
-      const { payload: postsPayload } = await dispatch(getPosts({ id: userId }));
-      const { payload: userPayload } = await dispatch(getUserById(userId));
-
-      setUserData(...userPayload);
-      setPosts(postsPayload);
+      await dispatch(getPosts(userId));
+      await dispatch(getUserById(userId));
     })();
   }, [userId]);
 
   useEffect(() => {
     setAvatar(
-      userData?.profile_img ? import.meta.env.VITE_APP_STORAGE + userData.profile_img : null,
+      currentUser?.profile_img ? import.meta.env.VITE_APP_STORAGE + currentUser.profile_img : null,
     );
-  }, [userData]);
+  }, [currentUser]);
 
   const onPostCreate = async () => {
-    await dispatch(createPost({ id: userId, header: postCreate.header, text: postCreate.text }));
+    await dispatch(createPost(userId, postCreate.header, postCreate.text));
 
     setPostCreate({ header: '', text: '' });
 
-    const { payload: postPayload } = await dispatch(getPosts({ id: userId }));
-
-    setPosts(postPayload);
+    await dispatch(getPosts(userId));
   };
 
   const onPostDelete = async (id) => {
-    await dispatch(deletePost({ id }));
-    const { payload: postPayload } = await dispatch(getPosts({ id: userId }));
-    setPosts(postPayload);
+    await dispatch(deletePost(id));
+    await dispatch(getPosts(userId));
   };
 
   return (
-    <div className="grid grid-cols-[2fr_7fr] gap-6 p-4 min-h-screen min-w-[1200px] bg-[#455a64] text-slate-100">
-      <NavBar />
-      <section className="flex flex-wrap">
-        <UserInfo userData={userData} userImage={avatar} isOwner={isOwner} setAvatar={setAvatar} />
-        <div className="rounded-md bg-[#607d8b] min-w-full m-[16px_0_0_0]">
-          <header className="my-6 mx-16 text-4xl">Публикации</header>
-          {isOwner && (
-            <PostCreate
-              postCreate={postCreate}
-              setPostCreate={setPostCreate}
-              onPostCreate={onPostCreate}
-            />
-          )}
-          <Posts
-            posts={posts}
-            avatar={avatar}
-            defaultAvatar={defaultAvatar}
-            onPostDelete={onPostDelete}
+    <section className="flex flex-wrap">
+      <UserInfo
+        userData={currentUser}
+        userImage={avatar}
+        isOwner={isOwner}
+        isLoading={usersLoading}
+        setAvatar={setAvatar}
+      />
+      <div className="rounded-md bg-[#607d8b] min-w-full m-[16px_0_0_0]">
+        <header className="my-6 mx-16 text-4xl">Публикации</header>
+        {isOwner && (
+          <PostCreate
+            postCreate={postCreate}
+            setPostCreate={setPostCreate}
+            onPostCreate={onPostCreate}
           />
-        </div>
-      </section>
+        )}
+        <Posts
+          posts={posts}
+          avatar={avatar}
+          defaultAvatar={defaultAvatar}
+          onPostDelete={onPostDelete}
+        />
+      </div>
 
       <HelmetProvider>
-        <Helmet title={userData.name} />
+        <Helmet title={currentUser.name} />
       </HelmetProvider>
-    </div>
+    </section>
   );
 }
 

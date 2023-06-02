@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import CryptoJS from 'crypto-js';
 import { rand } from 'random-bytes-js';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { signIn as signInAction } from '../../store/actions/authAction';
+import Swal from 'sweetalert2';
+import { signIn as signInAction } from '../../store/actions/authActions';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import LoginPreview from '../../components/LoginPreview/LoginPreview';
 import classes from './Login.module.css';
@@ -15,8 +16,7 @@ function Login() {
   const [password, setPassword] = useState();
   const [login, setLogin] = useState();
 
-  const { isLoading } = useSelector((state) => state.authReducer);
-  const { error } = useSelector((state) => state.authReducer);
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,9 +49,11 @@ function Login() {
     e.preventDefault();
 
     // Get data from server
-    const {
-      payload: { id_user: idUser, token },
-    } = await dispatch(signInAction({ password: encryptPass(password), login }));
+    const { token, id_user: idUser } = await dispatch(
+      signInAction({ password: encryptPass(password), login }),
+    );
+
+    if (error) Swal.fire(error);
 
     // If auth success then redirect to main page
     if (token) {
