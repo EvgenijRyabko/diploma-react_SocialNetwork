@@ -40,17 +40,17 @@ export const authReducer = (state = initialState, action) => {
 
     // Sign up actions
     case authActions.SIGN_UP:
-      return pendingReducer(state);
+      return { ...state, isLoading: true };
     case authActions.SIGN_UP_ERROR:
-      return rejectedReducer(state, action);
+      return { ...state, isLoading: false, error: action.payload };
     case authActions.SIGN_UP_SUCCESS:
       return state;
 
     // Sign out actions
     case authActions.SIGN_OUT:
-      return pendingReducer(state);
+      return { ...state, isLoading: true };
     case authActions.SIGN_OUT_ERROR:
-      return rejectedReducer(state, action);
+      return { ...state, isLoading: false, error: action.payload };
     case authActions.SIGN_OUT_SUCCESS:
       return state;
 

@@ -1,0 +1,296 @@
+.container {
+	@apply w-full 
+	min-h-screen 
+	
+	grid
+	grid-cols-[8fr_5fr];
+}
+*,
+*::before,
+*::after {
+	@apply box-border;
+}
+
+.forms-section {
+	@apply flex
+	justify-center
+	items-center
+
+	min-h-screen
+	w-full
+	bg-cover;
+
+	font-family: Roboto, -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+}
+
+.forms {
+	@apply flex
+	items-start
+	mt-[30px];
+}
+
+.form-wrapper {
+	@apply animate-[hideLayer_0.3s_ease-out_forwards];
+}
+
+.form-wrapper.is-active {
+	@apply animate-[showLayer_0.3s_ease-in_forwards];
+}
+
+@keyframes showLayer {
+	50% {
+		z-index: 1;
+	}
+	100% {
+		z-index: 1;
+	}
+}
+
+@keyframes hideLayer {
+	0% {
+		z-index: 1;
+	}
+	49.999% {
+		z-index: 1;
+	}
+}
+
+.switcher {
+	@apply relative
+	cursor-pointer
+	block
+	mr-auto
+	ml-auto
+	p-0
+	uppercase
+	font-[inherit]
+	text-2xl
+	tracking-[0.5px]
+	text-[#999]
+	bg-transparent
+	border-none
+	outline-none
+	translate-x-0
+	transition-all
+	duration-[0.3s]
+	ease-out;
+}
+
+.form-wrapper.is-active .switcher-login {
+	@apply text-[#fff];
+	transform: translateX(90px);
+}
+
+.form-wrapper.is-active .switcher-signup {
+	@apply text-[#fff];
+	transform: translateX(-90px);
+}
+
+.underline {
+	@apply absolute
+	bottom-[-5px]
+	left-0
+	overflow-hidden
+	pointer-events-none
+	w-full
+	h-[2px];
+}
+
+.underline::before {
+	@apply absolute
+	content-['']
+	top-0
+	left-[inherit]
+	block
+	w-[inherit]
+	h-[inherit]
+	bg-current
+	transition-transform
+	duration-[0.2s]
+	ease-out;
+}
+
+.switcher-login .underline::before {
+	transform: translateX(101%);
+}
+
+.switcher-signup .underline::before {
+	transform: translateX(-101%);
+}
+
+.form-wrapper.is-active .underline::before {
+	transform: translateX(0);
+}
+
+.form {
+	@apply grid
+	grid-rows-[6fr_2fr]
+	items-center
+	overflow-hidden
+	min-w-[450px]
+	min-h-[500px]
+	mt-[70px]
+	p-[30px_25px]
+	rounded-[5px]
+	origin-top;
+}
+
+.form-login {
+	@apply animate-[hideLogin_0.3s_ease-out_forwards];
+}
+
+.form-wrapper.is-active .form-login {
+	@apply animate-[showLogin_0.3s_ease-in_forwards]
+	shadow-[0_0_10px_#d7e7f1];
+}
+
+@keyframes showLogin {
+	0% {
+		background: #d7e7f1;
+		transform: translate(40%, 10px);
+	}
+	50% {
+		transform: translate(0, 0);
+	}
+	100% {
+		background-color: #fff;
+		transform: translate(35%, -20px);
+	}
+}
+
+@keyframes hideLogin {
+	0% {
+		background-color: #fff;
+		transform: translate(35%, -20px);
+	}
+	50% {
+		transform: translate(0, 0);
+	}
+	100% {
+		background: #d7e7f1;
+		transform: translate(40%, 10px);
+	}
+}
+
+.form-signup {
+	@apply animate-[hideSignup_0.3s_ease-out_forwards];
+}
+
+.form-wrapper.is-active .form-signup {
+	@apply animate-[showSignup_0.3s_ease-in_forwards]
+	shadow-[0_0_10px_#d7e7f1];
+}
+
+@keyframes showSignup {
+	0% {
+		background: #d7e7f1;
+		transform: translate(-40%, 10px) scaleY(0.8);
+	}
+	50% {
+		transform: translate(0, 0) scaleY(0.8);
+	}
+	100% {
+		background-color: #fff;
+		transform: translate(-35%, -20px) scaleY(1);
+	}
+}
+
+@keyframes hideSignup {
+	0% {
+		background-color: #fff;
+		transform: translate(-35%, -20px) scaleY(1);
+	}
+	50% {
+		transform: translate(0, 0) scaleY(0.8);
+	}
+	100% {
+		background: #d7e7f1;
+		transform: translate(-40%, 10px) scaleY(0.8);
+	}
+}
+
+.form fieldset {
+	@apply grid
+	grid-rows-2
+	gap-10
+	relative
+	opacity-0
+	m-0
+	p-0
+	border-0
+	transition-all
+	duration-[0.3s]
+	ease-out;
+}
+
+.form-login fieldset {
+	transform: translateX(-50%);
+}
+
+.form-signup fieldset {
+	transform: translateX(50%);
+}
+
+.form-wrapper.is-active fieldset {
+	@apply opacity-[1]
+	transition-[opacity_0.4s_ease-in_transform_0.35s_ease-in];
+	transform: translateX(0);
+}
+
+.form legend {
+	@apply absolute
+	overflow-hidden
+	w-[1px]
+	h-[1px];
+	clip: rect(0 0 0 0);
+}
+
+.input-block {
+	@apply mb-[20px];
+}
+
+.input-block label {
+	@apply font-[14px]
+	text-[#a1b4b4]
+	text-xl;
+
+	color: #404949;
+}
+
+.input-block input {
+	@apply block
+	w-full
+	mt-[8px]
+	pr-[15px]
+	pl-[15px]
+	font-[16px]
+	leading-[40px]
+	text-[#3b4465]
+	text-xl
+	bg-[#eef9fe]
+	border-[1px]
+	border-[#cddbef]
+	rounded-md;
+}
+
+.form [type="submit"] {
+	@apply opacity-0
+	block
+	min-w-[120px]
+	m-[30px_auto_10px]
+	font-[18px]
+	leading-[40px]
+	rounded-[25px]
+	border-none
+	transition-all
+	duration-[0.3s]
+	ease-out;
+}
+
+.form-wrapper.is-active .form [type="submit"] {
+	@apply opacity-[1]
+	transition-all
+	duration-[0.4s]
+	ease-in;
+	transform: translateX(0);
+}

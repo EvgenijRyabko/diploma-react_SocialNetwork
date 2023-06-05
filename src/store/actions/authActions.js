@@ -17,20 +17,26 @@ export const signIn = (payload) => async (dispatch) => {
 
 export const signOut = (token) => async (dispatch) => {
   try {
-    dispatch('SIGN_OUT');
+    dispatch({ type: authActions.SIGN_OUT });
     const response = await axios.post(`/api/auth/signout`, { token });
-    dispatch('SIGN_IN_OUT', response.data);
+    dispatch({ type: authActions.SIGN_OUT_SUCCESS }, response.data);
   } catch (e) {
-    dispatch('SIGN_OUT_ERROR', e?.response?.data || 'Произошла непредвиденная ошибка');
+    dispatch(
+      { type: authActions.SIGN_OUT_ERROR },
+      e?.response?.data || 'Произошла непредвиденная ошибка',
+    );
   }
 };
 
 export const signUp = (payload) => async (dispatch) => {
   try {
-    dispatch('SIGN_UP');
+    dispatch({ type: authActions.SIGN_UP });
     const response = await axios.post(`/api/auth/signup`, payload);
-    dispatch('SIGN_UP_SUCCESS', response.data);
+    dispatch({ type: authActions.SIGN_UP_SUCCESS }, response.data);
   } catch (e) {
-    dispatch('SIGN_UP_ERROR', e?.response?.data || 'Произошла непредвиденная ошибка');
+    dispatch(
+      { type: authActions.SIGN_UP_ERROR },
+      e?.response?.data || 'Произошла непредвиденная ошибка',
+    );
   }
 };

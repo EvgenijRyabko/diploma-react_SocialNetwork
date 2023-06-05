@@ -1,7 +1,0 @@
-.container {
-	@apply w-full 
-	min-h-screen 
-	
-	grid
-	grid-cols-[8fr_5fr];
-}
