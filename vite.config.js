@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: 'http://localhost:3000/auth',
   server: {
     host: true,
     port: 3000,
