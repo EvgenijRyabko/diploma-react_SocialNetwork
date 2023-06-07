@@ -20,15 +20,24 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
     setAvatar(import.meta.env.VITE_APP_STORAGE + res);
   };
 
-  const showInputModal = () => {
-    let inputFormHtml = '<form className="grid gap-2 p-2" encType="multipart/form-data">';
-    inputFormHtml +=
-      '<label htmlFor="formFileSm" className="mb-2 inline-block text-neutral-300" />';
-    inputFormHtml +=
-      '<input className={classes.profileImageInput} id="formFileSm" type="file" name="photo" accept=".jpg, .jpeg, .png" onChange={(e)=>setUpload(e.target.files[0])} />';
-    inputFormHtml +=
-      '<button type="button" onClick={onSendProfile} className="w-3/6 justify-self-center bg-transparent hover:bg-amber-200 text-amber-200 font-semibold hover:text-black py-2 px-4 border border-amber-200 rounded">Send</button></form>';
-    Swal.fire('', inputFormHtml);
+  const showInputModal = async () => {
+    const { value: file } = await Swal.fire({
+      title: 'Выберите изображение',
+      input: 'file',
+      inputAttributes: {
+        accept: '.jpg, .JPEG, .png',
+      },
+    });
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        Swal.fire({
+          imageUrl: e.target.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
