@@ -29,7 +29,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/auth" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/*" element={App} />
       </Routes>
     </BrowserRouter>
