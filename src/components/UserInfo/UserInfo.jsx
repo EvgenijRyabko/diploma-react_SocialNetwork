@@ -1,43 +1,14 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import Swal from 'sweetalert2';
-import { postProfileImage } from '../../store/actions/usersActions';
+import React, { useRef } from 'react';
+import ImageCrop from '../ImageCrop/ImageCrop';
 import parseDate from '../../utils/parseDate';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
 import classes from './UserInfo.module.css';
 
 function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => f }) {
-  const dispatch = useDispatch();
-  const [upload, setUpload] = useState();
+  const modalRef = useRef();
 
-  const onSendProfile = async () => {
-    const formData = new FormData();
-
-    formData.append('file', upload);
-
-    const res = await dispatch(postProfileImage({ userId: userData.id, formData }));
-
-    setAvatar(import.meta.env.VITE_APP_STORAGE + res);
-  };
-
-  const showInputModal = async () => {
-    const { value: file } = await Swal.fire({
-      title: 'Выберите изображение',
-      input: 'file',
-      inputAttributes: {
-        accept: '.jpg, .JPEG, .png',
-      },
-    });
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        Swal.fire({
-          imageUrl: e.target.result,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
+  const showModal = () => {
+    modalRef.current.classList.add('active');
   };
 
   return (
@@ -51,7 +22,7 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
           />
         </div>
         {isOwner && (
-          <button type="button" onClick={showInputModal}>
+          <button type="button" onClick={showModal}>
             Изменить фото
           </button>
         )}
@@ -69,6 +40,7 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
           {userData.education ? <p>Образование: {userData.education}</p> : ''}
         </div>
       </div>
+      <ImageCrop modalRef={modalRef} setAvatar={setAvatar} userData={userData} />
     </div>
   );
 }
