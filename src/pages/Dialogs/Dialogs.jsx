@@ -4,8 +4,32 @@ import NavBar from '../../components/NavBar/NavBar';
 
 function Dialogs() {
   return (
-    <div className="h-screen bg-slate-200 rounded-md">
-      Content
+    <div className="rounded-md bg-[#607d8b] min-w-full">
+      <div>
+        <aside>
+          <div>
+            <img src="" alt="user" />
+            <header>Username</header>
+            <p>Last message</p>
+          </div>
+          <div>
+            <img src="" alt="user" />
+            <header>Username</header>
+            <p>Last message</p>
+          </div>
+          <div>
+            <img src="" alt="user" />
+            <header>Username</header>
+            <p>Last message</p>
+          </div>
+          <div>
+            <img src="" alt="user" />
+            <header>Username</header>
+            <p>Last message</p>
+          </div>
+        </aside>
+        <section />
+      </div>
       <HelmetProvider>
         <Helmet title="Диалоги" />
       </HelmetProvider>

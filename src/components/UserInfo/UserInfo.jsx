@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ImageCrop from '../ImageCrop/ImageCrop';
 import parseDate from '../../utils/parseDate';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
@@ -14,7 +14,7 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
   return (
     <div className="grid grid-cols-[3fr_7fr] relative rounded-md bg-[#607d8b] min-w-full min-h-[300px]">
       <div className="grid p-4">
-        <div className="border-2 border-slate-200 rounded-md min-w-[350px] min-h-[400px]">
+        <div className="border-2 border-slate-200 rounded-md min-w-[300px] min-h-[300px]">
           <img
             src={userImage || defaultAvatar}
             alt="userLogo"
@@ -22,21 +22,21 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
           />
         </div>
         {isOwner && (
-          <button type="button" onClick={showModal}>
+          <button type="button" className="py-2" onClick={showModal}>
             Изменить фото
           </button>
         )}
       </div>
       <div className="p-4">
-        <header className="text-3xl">{userData?.name || 'Name'}</header>
-        <p className="text-slate-300">{userData?.status || 'Нет статуса'}</p>
+        <header className="text-2xl">{userData?.name || 'Name'}</header>
+        <p className="text-slate-300 text-xl">{userData?.status || 'Нет статуса'}</p>
         <div className="py-10">
           {userData.birth_date ? (
-            <p>Дата рождения: {parseDate(userData.birth_date).split(' ')[0]}</p>
+            <p className="text-lg">Дата рождения: {parseDate(userData.birth_date).split(' ')[0]}</p>
           ) : (
             ''
           )}
-          {userData.city ? <p>Город: {userData.city}</p> : ''}
+          {userData.city ? <p className="text-lg">Город: {userData.city}</p> : ''}
           {userData.education ? <p>Образование: {userData.education}</p> : ''}
         </div>
       </div>

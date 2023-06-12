@@ -5,7 +5,6 @@ import Cookies from 'universal-cookie';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { getPosts, deletePost, createPost } from '../../store/actions/postsActions';
 import { getUserById } from '../../store/actions/usersActions';
-import NavBar from '../../components/NavBar/NavBar';
 import PostCreate from '../../components/PostCreate/PostCreate';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
@@ -24,7 +23,6 @@ function Profile() {
     isLoading: usersLoading,
     error: usersError,
   } = useSelector((state) => state.users);
-  // const [posts, setPosts] = useState([]);
 
   const userId = parseInt(location.pathname.split('/').reverse()[0]);
 
@@ -39,7 +37,9 @@ function Profile() {
 
   useEffect(() => {
     setAvatar(
-      currentUser?.profile_img ? import.meta.env.VITE_APP_STORAGE + currentUser.profile_img : null,
+      currentUser?.profile_img
+        ? `${import.meta.env.VITE_APP_STORAGE}${currentUser.profile_img}`
+        : null,
     );
   }, [currentUser]);
 
@@ -65,8 +65,36 @@ function Profile() {
         isLoading={usersLoading}
         setAvatar={setAvatar}
       />
+      <section className="rounded-md bg-[#607d8b] min-w-full m-[16px_0_0_0]">
+        <div className="grid grid-cols-2">
+          <header className="my-6 mx-16 text-2xl">Альбомы</header>
+          {isOwner && (
+            <button type="button" className="text-lg justify-self-end px-2">
+              Создать альбом
+            </button>
+          )}
+        </div>
+        <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap min-w-[250px] min-h-[250px] border-2 border-slate-200 rounded-md m-2">
+            <div className="min-w-full min-h-[200px]">img</div>
+            <p className="min-w-full text-center">Album</p>
+          </div>
+          <div className="flex flex-wrap min-w-[250px] min-h-[250px] border-2 border-slate-200 rounded-md m-2">
+            <div className="min-w-full min-h-[200px]">img</div>
+            <p className="min-w-full text-center">Album</p>
+          </div>
+          <div className="flex flex-wrap min-w-[250px] min-h-[250px] border-2 border-slate-200 rounded-md m-2">
+            <div className="min-w-full min-h-[200px]">img</div>
+            <p className="min-w-full text-center">Album</p>
+          </div>
+          <div className="flex flex-wrap min-w-[250px] min-h-[250px] border-2 border-slate-200 rounded-md m-2">
+            <div className="min-w-full min-h-[200px]">img</div>
+            <p className="min-w-full text-center">Album</p>
+          </div>
+        </div>
+      </section>
       <div className="rounded-md bg-[#607d8b] min-w-full m-[16px_0_0_0]">
-        <header className="my-6 mx-16 text-4xl">Публикации</header>
+        <header className="my-6 mx-16 text-2xl">Публикации</header>
         {isOwner && (
           <PostCreate
             postCreate={postCreate}
@@ -79,6 +107,8 @@ function Profile() {
           avatar={avatar}
           defaultAvatar={defaultAvatar}
           onPostDelete={onPostDelete}
+          username={currentUser.name}
+          isOwner={isOwner}
         />
       </div>
 

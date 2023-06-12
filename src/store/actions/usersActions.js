@@ -56,3 +56,35 @@ export const postProfileImage =
       });
     }
   };
+
+export const subscribeToUser =
+  ({ userId, formData }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: usersActions.POST_PROFILE_IMG });
+      const response = await axios.post(`/api/users/uploadProfile/${userId}`, formData);
+      dispatch({ type: usersActions.POST_PROFILE_IMG_SUCCESS, payload: response.data });
+      return response.data;
+    } catch (e) {
+      dispatch({
+        type: usersActions.POST_PROFILE_IMG_ERROR,
+        payload: e?.response?.data || 'Произошла непредвиденная ошибка',
+      });
+    }
+  };
+
+export const unSubscribeUser =
+  ({ userId, formData }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: usersActions.POST_PROFILE_IMG });
+      const response = await axios.post(`/api/users/uploadProfile/${userId}`, formData);
+      dispatch({ type: usersActions.POST_PROFILE_IMG_SUCCESS, payload: response.data });
+      return response.data;
+    } catch (e) {
+      dispatch({
+        type: usersActions.POST_PROFILE_IMG_ERROR,
+        payload: e?.response?.data || 'Произошла непредвиденная ошибка',
+      });
+    }
+  };

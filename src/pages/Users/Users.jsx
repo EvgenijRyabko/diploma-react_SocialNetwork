@@ -42,8 +42,8 @@ function Users() {
     <div className="bg-[#607d8b] rounded-md text-slate-200">
       {users.map((el, id) => (
         <section key={id} className="grid p-2 min-w-full min-h-[200px]">
-          <div className="grid grid-cols-[1fr_6fr_1fr] gap-6 border-2 rounded-md">
-            <div className="grid">
+          <div className="grid grid-cols-[1fr_5fr_2fr] gap-6 border-2 rounded-md">
+            <div className="grid mx-2">
               <img
                 src={
                   el?.profile_img

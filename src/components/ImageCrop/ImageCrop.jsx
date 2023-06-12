@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import './ImageCrop.css';
 import { ReactCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { Blob } from 'buffer';
 import { useDispatch } from 'react-redux';
 import { postProfileImage } from '../../store/actions/usersActions';
 
@@ -14,7 +13,6 @@ function ImageCrop({ modalRef, userData, setAvatar = (f) => f }) {
     width: 300,
     height: 300,
   });
-  const [output, setOutput] = useState(null);
   const imageRef = useRef();
   const inputRef = useRef();
 
@@ -22,10 +20,6 @@ function ImageCrop({ modalRef, userData, setAvatar = (f) => f }) {
     const formData = new FormData();
 
     formData.append('file', image);
-
-    for (const pair of formData.entries()) {
-      console.log(`${pair}`);
-    }
 
     const res = await dispatch(postProfileImage({ userId: userData.id, formData }));
 
@@ -36,7 +30,7 @@ function ImageCrop({ modalRef, userData, setAvatar = (f) => f }) {
     setSrc(URL.createObjectURL(file));
   };
 
-  const cropImageNow = () => {
+  const cropImageNow = async () => {
     const canvas = document.createElement('canvas');
     const scaleX = imageRef.current.naturalWidth / imageRef.current.width;
     const scaleY = imageRef.current.naturalHeight / imageRef.current.height;
@@ -62,9 +56,9 @@ function ImageCrop({ modalRef, userData, setAvatar = (f) => f }) {
       crop.height,
     );
 
-    // Converting to base64
-    const base64Image = canvas.toDataURL('image/jpeg');
-    changeProfilePhoto(base64Image.toString('base64'));
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg'));
+    changeProfilePhoto(blob);
+    modalRef.current.classList.remove('active');
   };
 
   return (
@@ -112,7 +106,6 @@ function ImageCrop({ modalRef, userData, setAvatar = (f) => f }) {
                 </button>
               </div>
             )}
-            <div>{output && <img src={output} alt="output" />}</div>
           </div>
         </div>
       </div>
