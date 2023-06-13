@@ -3,9 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { NavLink } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { getUsers, getUserFollowers } from '../../store/actions/usersActions';
+import {
+  getUsers,
+  getUserFollowers,
+  subscribeToUser,
+  unSubscribeUser,
+} from '../../store/actions/usersActions';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
-import NavBar from '../../components/NavBar/NavBar';
 
 function Users() {
   const cookie = new Cookies();
@@ -21,7 +25,7 @@ function Users() {
     (async () => {
       const res = await dispatch(getUserFollowers(profileId));
 
-      setRelations(res.payload);
+      setRelations(res);
     })();
   }, []);
 
@@ -34,9 +38,19 @@ function Users() {
     return false;
   };
 
-  const unSubscribe = (userId) => {};
+  const unSubscribe = async (userId) => {
+    await dispatch(unSubscribeUser(profileId, userId));
+    const res = await dispatch(getUserFollowers(profileId));
 
-  const Subscribe = (userId) => {};
+    setRelations(res);
+  };
+
+  const Subscribe = async (userId) => {
+    await dispatch(subscribeToUser(profileId, userId));
+    const res = await dispatch(getUserFollowers(profileId));
+
+    setRelations(res);
+  };
 
   return (
     <div className="bg-[#607d8b] rounded-md text-slate-200">

@@ -22,6 +22,18 @@ export const usersActions = {
   DELETE_USER: 'DELETE_USER',
   DELETE_USER_ERROR: 'DELETE_USER_ERROR',
   DELETE_USER_SUCCESS: 'DELETE_USER_SUCCESS',
+
+  SUBSCRIBE: 'SUBSCRIBE',
+  SUBSCRIBE_ERROR: 'SUBSCRIBE_ERROR',
+  SUBSCRIBE_SUCCESS: 'SUBSCRIBE_SUCCESS',
+
+  UNSUBSCRIBE: 'UNSUBSCRIBE',
+  UNSUBSCRIBE_ERROR: 'UNSUBSCRIBE_ERROR',
+  UNSUBSCRIBE_SUCCESS: 'UNSUBSCRIBE_SUCCESS',
+
+  GET_FRIENDS: 'GET_FRIENDS',
+  GET_FRIENDS_ERROR: 'GET_FRIENDS_ERROR',
+  GET_FRIENDS_SUCCESS: 'GET_FRIENDS_SUCCESS',
 };
 
 const initialState = {
@@ -65,6 +77,14 @@ export const usersReducer = (state = initialState, action) => {
     case usersActions.GET_FOLLOWERS_SUCCESS:
       return { ...state, isLoading: false };
 
+    // Get user friends actions
+    case usersActions.GET_FRIENDS:
+      return { ...state, isLoading: true };
+    case usersActions.GET_FRIENDS_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case usersActions.GET_FRIENDS_SUCCESS:
+      return { ...state, isLoading: false };
+
     // Post profile image actions
     case usersActions.POST_PROFILE_IMG:
       return { ...state, isLoading: true };
@@ -84,6 +104,22 @@ export const usersReducer = (state = initialState, action) => {
         users: state.users.filter((user) => user.id !== action.payload),
         isLoading: false,
       };
+
+    // Subscribe to user actions
+    case usersActions.SUBSCRIBE:
+      return { ...state, isLoading: true };
+    case usersActions.SUBSCRIBE_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case usersActions.SUBSCRIBE_SUCCESS:
+      return { ...state, isLoading: false };
+
+    // Unsubscribe from user actions
+    case usersActions.UNSUBSCRIBE:
+      return { ...state, isLoading: true };
+    case usersActions.UNSUBSCRIBE_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case usersActions.UNSUBSCRIBE_SUCCESS:
+      return { ...state, isLoading: false };
 
     // Default action
     default:

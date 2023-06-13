@@ -12,15 +12,6 @@ export const authActions = {
   SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
 };
 
-const pendingReducer = (state) => {
-  state.isLoading = true;
-};
-
-const rejectedReducer = (state, action) => {
-  state.isLoading = false;
-  if (action) state.error = action.payload.error;
-};
-
 const initialState = {
   token: '',
   user_id: null,

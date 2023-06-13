@@ -41,6 +41,20 @@ export const getUserFollowers = (id) => async (dispatch) => {
   }
 };
 
+export const getUserFriends = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: usersActions.GET_FRIENDS });
+    const response = await axios.get(`/api/users/${id}/friends`);
+    dispatch({ type: usersActions.GET_FRIENDS_SUCCESS, payload: response.data });
+    return response.data;
+  } catch (e) {
+    dispatch({
+      type: usersActions.GET_FRIENDS_ERROR,
+      payload: e?.response?.data || 'Произошла непредвиденная ошибка',
+    });
+  }
+};
+
 export const postProfileImage =
   ({ userId, formData }) =>
   async (dispatch) => {
@@ -57,34 +71,36 @@ export const postProfileImage =
     }
   };
 
-export const subscribeToUser =
-  ({ userId, formData }) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: usersActions.POST_PROFILE_IMG });
-      const response = await axios.post(`/api/users/uploadProfile/${userId}`, formData);
-      dispatch({ type: usersActions.POST_PROFILE_IMG_SUCCESS, payload: response.data });
-      return response.data;
-    } catch (e) {
-      dispatch({
-        type: usersActions.POST_PROFILE_IMG_ERROR,
-        payload: e?.response?.data || 'Произошла непредвиденная ошибка',
-      });
-    }
-  };
+export const subscribeToUser = (source, target) => async (dispatch) => {
+  try {
+    dispatch({ type: usersActions.SUBSCRIBE });
+    const response = await axios.post(`/api/users/subscribe`, {
+      source,
+      target,
+    });
+    dispatch({ type: usersActions.SUBSCRIBE_SUCCESS, payload: response.data });
+    return response.data;
+  } catch (e) {
+    dispatch({
+      type: usersActions.SUBSCRIBE_ERROR,
+      payload: e?.response?.data || 'Произошла непредвиденная ошибка',
+    });
+  }
+};
 
-export const unSubscribeUser =
-  ({ userId, formData }) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: usersActions.POST_PROFILE_IMG });
-      const response = await axios.post(`/api/users/uploadProfile/${userId}`, formData);
-      dispatch({ type: usersActions.POST_PROFILE_IMG_SUCCESS, payload: response.data });
-      return response.data;
-    } catch (e) {
-      dispatch({
-        type: usersActions.POST_PROFILE_IMG_ERROR,
-        payload: e?.response?.data || 'Произошла непредвиденная ошибка',
-      });
-    }
-  };
+export const unSubscribeUser = (source, target) => async (dispatch) => {
+  try {
+    dispatch({ type: usersActions.UNSUBSCRIBE });
+    const response = await axios.post(`/api/users/unsubscribe`, {
+      source,
+      target,
+    });
+    dispatch({ type: usersActions.UNSUBSCRIBE_SUCCESS, payload: response.data });
+    return response.data;
+  } catch (e) {
+    dispatch({
+      type: usersActions.UNSUBSCRIBE_ERROR,
+      payload: e?.response?.data || 'Произошла непредвиденная ошибка',
+    });
+  }
+};

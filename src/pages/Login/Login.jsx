@@ -23,7 +23,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cookies = ['auth-token', 'user-id'];
+  const cookies = ['auth-token', 'id-user'];
 
   const [, setCookie, removeCookie] = useCookies(cookies);
 

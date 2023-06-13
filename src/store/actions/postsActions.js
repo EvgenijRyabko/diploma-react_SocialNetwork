@@ -25,6 +25,7 @@ export const createPost =
         text,
       });
       dispatch({ type: postsActions.ADD_POST_SUCCESS });
+      return response.data;
     } catch (e) {
       dispatch({
         type: postsActions.ADD_POST_ERROR,
