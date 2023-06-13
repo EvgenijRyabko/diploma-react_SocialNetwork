@@ -11,10 +11,11 @@ import Login from '../pages/Login/Login';
 import Dialogs from '../pages/Dialogs/Dialogs';
 import Users from '../pages/Users/Users';
 import Settings from '../pages/Settings/Settings';
-import NavBar from '../components/NavBar/NavBar';
 import Friends from '../pages/Friends/Friends';
 
+// Components
 import Header from '../components/Header/Header';
+import NavBar from '../components/NavBar/NavBar';
 
 function Router() {
   const App = (
