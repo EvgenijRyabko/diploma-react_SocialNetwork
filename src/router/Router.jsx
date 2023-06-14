@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Middlewares
-// import LoginRoute from '../middlewares/Login.middleware';
-// import PrivateRoute from '../middlewares/Private.middleware';
+import LoginRoute from '../middlewares/Login.middleware';
+import PrivateRoute from '../middlewares/Private.middleware';
 
 // Pages
 import Profile from '../pages/Profile/Profile';
@@ -19,7 +19,7 @@ import NavBar from '../components/NavBar/NavBar';
 
 function Router() {
   const App = (
-    <>
+    <PrivateRoute>
       <Header />
       <div className="grid grid-cols-[3fr_9fr] gap-6 p-4 min-h-screen min-w-[1200px] bg-[#455a64] text-slate-100">
         <NavBar />
@@ -31,13 +31,19 @@ function Router() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
-    </>
+    </PrivateRoute>
+  );
+
+  const LoginPage = (
+    <LoginRoute>
+      <Login />
+    </LoginRoute>
   );
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={LoginPage} />
         <Route path="/*" element={App} />
       </Routes>
     </BrowserRouter>

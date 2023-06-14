@@ -51,20 +51,18 @@ function Login() {
     e.preventDefault();
 
     // Get data from server
-    const { token, id_user: idUser } = await dispatch(
-      signInAction({ password: encryptPass(password), login }),
-    );
+    const res = await dispatch(signInAction({ password: encryptPass(password), login }));
 
-    if (error) Swal.fire(error);
+    if (error) Swal.fire(error.error);
 
     // If auth success then redirect to main page
-    if (token) {
+    if (res?.token) {
       for (let i = 0; i < cookies.length; i++) removeCookie(cookies[i], { path: '/' });
 
-      setCookie('auth-token', token, { path: '/' });
-      setCookie('id-user', idUser, { path: '/' });
+      setCookie('auth-token', res.token, { path: '/' });
+      setCookie('id-user', res.id_user, { path: '/' });
 
-      navigate(`/profile/${idUser}`);
+      navigate(`/profile/${res.id_user}`);
     }
   };
 

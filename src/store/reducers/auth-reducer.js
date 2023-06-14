@@ -23,7 +23,7 @@ export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     // Sign in actions
     case authActions.SIGN_IN:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, error: null };
     case authActions.SIGN_IN_ERROR:
       return { ...state, isLoading: false, error: action.payload };
     case authActions.SIGN_IN_SUCCESS:
@@ -31,7 +31,7 @@ export const authReducer = (state = initialState, action) => {
 
     // Sign up actions
     case authActions.SIGN_UP:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, error: null };
     case authActions.SIGN_UP_ERROR:
       return { ...state, isLoading: false, error: action.payload };
     case authActions.SIGN_UP_SUCCESS:
@@ -39,7 +39,7 @@ export const authReducer = (state = initialState, action) => {
 
     // Sign out actions
     case authActions.SIGN_OUT:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, error: null };
     case authActions.SIGN_OUT_ERROR:
       return { ...state, isLoading: false, error: action.payload };
     case authActions.SIGN_OUT_SUCCESS:

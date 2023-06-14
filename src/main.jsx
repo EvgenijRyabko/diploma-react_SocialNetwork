@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import Router from './router/Router';
+import './middlewares/axiosInterceptors';
 import { store } from './store/store';
 import './index.css';
 
