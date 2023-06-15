@@ -25,7 +25,7 @@ function Dialogs() {
 
   return (
     <div className="rounded-md bg-[#607d8b] min-w-full p-2">
-      <div className="grid grid-cols-[3fr_7fr] gap-2">
+      <div className="grid grid-cols-[4fr_6fr] gap-2">
         <DialogBox setDialog={setDialogId} setName={setName} />
         <section className="grid grid-rows-[50px_4fr_110px] gap-2 w-full min-h-full border-2 border-slate-100 rounded-md">
           <header className="min-w-full min-h-[50px] mb-4 text-2xl text-center text-slate-100 border-2 border-slate-100">

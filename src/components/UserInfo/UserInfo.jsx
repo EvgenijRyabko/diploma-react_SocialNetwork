@@ -22,7 +22,11 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
           />
         </div>
         {isOwner && (
-          <button type="button" className="py-2" onClick={showModal}>
+          <button
+            type="button"
+            className="py-2 hover:text-amber-400 duration-300"
+            onClick={showModal}
+          >
             Изменить фото
           </button>
         )}
@@ -32,12 +36,29 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
         <p className="text-slate-300 text-xl">{userData?.status || 'Нет статуса'}</p>
         <div className="py-10">
           {userData.birth_date ? (
-            <p className="text-lg">Дата рождения: {parseDate(userData.birth_date).split(' ')[0]}</p>
+            <p className="text-lg">
+              Дата рождения:{' '}
+              <span className="text-slate-300 text-lg">
+                {parseDate(userData.birth_date).split(' ')[0]}
+              </span>
+            </p>
           ) : (
             ''
           )}
-          {userData.city ? <p className="text-lg">Город: {userData.city}</p> : ''}
-          {userData.education ? <p>Образование: {userData.education}</p> : ''}
+          {userData.city ? (
+            <p className="text-lg">
+              Город: <span className="text-slate-300 text-lg">{userData.city}</span>
+            </p>
+          ) : (
+            ''
+          )}
+          {userData.education ? (
+            <p className="text-lg">
+              Образование: <span className="text-slate-300 text-lg">{userData.education}</span>
+            </p>
+          ) : (
+            ''
+          )}
         </div>
       </div>
       <ImageCrop modalRef={modalRef} setAvatar={setAvatar} userData={userData} />

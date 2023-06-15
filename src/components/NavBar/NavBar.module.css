@@ -17,7 +17,5 @@
 }
 
 .navText {
-	@apply text-xl
-	font-['Hind_Siliguri']
-	tracking-wider;
+	@apply text-lg font-['Hind_Siliguri'] tracking-wider;
 }
