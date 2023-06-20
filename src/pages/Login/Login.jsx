@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import CryptoJS from 'crypto-js';
 import { rand } from 'random-bytes-js';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import Swal from 'sweetalert2';
 import { signIn as signInAction, signUp as signUpAction } from '../../store/actions/authActions';
 import bgImage from '../../assets/loginBG.svg';
 import './Login.css';
@@ -51,9 +50,9 @@ function Login() {
     e.preventDefault();
 
     // Get data from server
-    const res = await dispatch(signInAction({ password: encryptPass(password), login }));
-
-    if (error) Swal.fire(error.error);
+    const res = await dispatch(
+      signInAction({ password: password ? encryptPass(password) : '', login }),
+    );
 
     // If auth success then redirect to main page
     if (res?.token) {
@@ -75,21 +74,26 @@ function Login() {
     signUp.current.classList.remove('is-active');
   };
 
+  const switchPage = async (e) => {
+    await dispatch({ type: 'CLEAR_ERROR' });
+    setLogin('');
+    setPassword('');
+    setUsername('');
+
+    if (signIn.current?.classList.contains('is-active')) {
+      signIn.current.classList.remove('is-active');
+      signUp.current.classList.add('is-active');
+    } else {
+      signIn.current.classList.add('is-active');
+      signUp.current.classList.remove('is-active');
+    }
+  };
+
   return (
     <section className="forms-section" style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="forms">
         <div ref={signIn} className="form-wrapper is-active">
-          <button
-            type="button"
-            className="switcher switcher-login"
-            onClick={() => {
-              setLogin('');
-              setPassword('');
-              setUsername('');
-              signIn.current.classList.add('is-active');
-              signUp.current.classList.remove('is-active');
-            }}
-          >
+          <button type="button" className="switcher switcher-login" onClick={switchPage}>
             ВХОД
             <span className="underline" />
           </button>
@@ -103,6 +107,7 @@ function Login() {
                   id="signin-login"
                   type="text"
                   placeholder="Введите логин"
+                  minLength={6}
                   onChange={(e) => setLogin(e.target.value)}
                   required
                 />
@@ -114,6 +119,7 @@ function Login() {
                   id="signin-password"
                   type="password"
                   placeholder="Введите пароль"
+                  minLength={6}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
@@ -126,20 +132,15 @@ function Login() {
             >
               Войти
             </button>
+            {error && (
+              <div className="error">
+                <div className="errorMessage">{error.error}</div>
+              </div>
+            )}
           </form>
         </div>
         <div ref={signUp} className="form-wrapper">
-          <button
-            type="button"
-            className="switcher switcher-signup"
-            onClick={() => {
-              setLogin('');
-              setPassword('');
-              setUsername('');
-              signIn.current.classList.remove('is-active');
-              signUp.current.classList.add('is-active');
-            }}
-          >
+          <button type="button" className="switcher switcher-signup" onClick={switchPage}>
             РЕГИСТРАЦИЯ
             <span className="underline" />
           </button>
@@ -191,6 +192,11 @@ function Login() {
             >
               Зарегестрироваться
             </button>
+            {error && (
+              <div className="error">
+                <div className="errorMessage">{error.error}</div>
+              </div>
+            )}
           </form>
         </div>
       </div>

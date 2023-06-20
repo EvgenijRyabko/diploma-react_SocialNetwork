@@ -10,6 +10,8 @@ export const authActions = {
   SIGN_OUT: 'SIGN_OUT',
   SIGN_OUT_ERROR: 'SIGN_OUT_ERROR',
   SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
+
+  CLEAR_ERROR: 'CLEAR_ERROR',
 };
 
 const initialState = {
@@ -44,6 +46,9 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, error: action.payload };
     case authActions.SIGN_OUT_SUCCESS:
       return state;
+
+    case authActions.CLEAR_ERROR:
+      return { ...state, isLoading: false, error: null };
 
     // default actions
     default:
