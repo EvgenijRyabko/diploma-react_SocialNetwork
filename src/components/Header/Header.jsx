@@ -14,7 +14,7 @@ function Header() {
   };
 
   return (
-    <div className="px-4 bg-[#455a64]">
+    <div className="px-4 bg-[#455a64] min-w-[1200px]">
       <div className="grid bg-[#607d8b] rounded-md">
         <button
           type="button"

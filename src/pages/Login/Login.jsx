@@ -6,7 +6,6 @@ import CryptoJS from 'crypto-js';
 import { rand } from 'random-bytes-js';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { signIn as signInAction, signUp as signUpAction } from '../../store/actions/authActions';
-import bgImage from '../../assets/loginBG.svg';
 import './Login.css';
 import { Preloader } from '../../components/Preloader/Preloader';
 
@@ -90,7 +89,7 @@ function Login() {
   };
 
   return (
-    <section className="forms-section" style={{ backgroundImage: `url(${bgImage})` }}>
+    <section className="forms-section">
       <div className="forms">
         <div ref={signIn} className="form-wrapper is-active">
           <button type="button" className="switcher switcher-login" onClick={switchPage}>
@@ -127,7 +126,7 @@ function Login() {
             </fieldset>
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white text-lg font-bold py-2 px-4 rounded-full"
+              className="bg-transparent hover:text-amber-400 text-white text-lg font-bold py-2 px-4 rounded-md duration-300"
               onClick={(e) => onSignIn(e)}
             >
               Войти
@@ -185,12 +184,12 @@ function Login() {
             </fieldset>
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 text-lg rounded-full"
+              className="bg-transparent hover:text-amber-400 text-white text-lg font-bold py-2 px-4 rounded-md duration-300"
               onClick={(e) => {
                 onSignUp(e);
               }}
             >
-              Зарегестрироваться
+              Создать
             </button>
             {error && (
               <div className="error">

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap");
 
 .container {
-	@apply rounded-md bg-[#607d8b];
+	@apply rounded-md bg-[#607d8b] min-w-[200px];
 }
 
 .list {

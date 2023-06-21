@@ -5,7 +5,7 @@
 }
 
 .forms-section {
-	@apply flex justify-center items-center min-h-screen w-full bg-cover;
+	@apply flex justify-center items-center min-h-screen w-full bg-[#455a64];
 
 	font-family: Roboto, -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
 }
@@ -85,12 +85,12 @@
 }
 
 .form-wrapper.is-active .form-login {
-	@apply animate-[showLogin_0.3s_ease-in_forwards] shadow-[0_0_10px_#d7e7f1];
+	@apply animate-[showLogin_0.3s_ease-in_forwards];
 }
 
 @keyframes showLogin {
 	0% {
-		background: #d7e7f1;
+		background: #4d6672;
 		transform: translate(40%, 10px);
 	}
 
@@ -99,14 +99,14 @@
 	}
 
 	100% {
-		background-color: #fff;
+		background-color: #607d8b;
 		transform: translate(35%, -20px);
 	}
 }
 
 @keyframes hideLogin {
 	0% {
-		background-color: #fff;
+		background-color: #607d8b;
 		transform: translate(35%, -20px);
 	}
 
@@ -115,7 +115,7 @@
 	}
 
 	100% {
-		background: #d7e7f1;
+		background: #4d6672;
 		transform: translate(40%, 10px);
 	}
 }
@@ -125,12 +125,12 @@
 }
 
 .form-wrapper.is-active .form-signup {
-	@apply animate-[showSignup_0.3s_ease-in_forwards] shadow-[0_0_10px_#d7e7f1];
+	@apply animate-[showSignup_0.3s_ease-in_forwards];
 }
 
 @keyframes showSignup {
 	0% {
-		background: #d7e7f1;
+		background: #4d6672;
 		transform: translate(-40%, 10px) scaleY(0.8);
 	}
 
@@ -139,14 +139,14 @@
 	}
 
 	100% {
-		background-color: #fff;
+		background-color: #607d8b;
 		transform: translate(-35%, -20px) scaleY(1);
 	}
 }
 
 @keyframes hideSignup {
 	0% {
-		background-color: #fff;
+		background-color: #607d8b;
 		transform: translate(-35%, -20px) scaleY(1);
 	}
 
@@ -155,7 +155,7 @@
 	}
 
 	100% {
-		background: #d7e7f1;
+		background: #4d6672;
 		transform: translate(-40%, 10px) scaleY(0.8);
 	}
 }
@@ -185,11 +185,19 @@
 .input-block label {
 	@apply font-[14px] text-[#a1b4b4] text-lg;
 
-	color: #404949;
+	color: white;
 }
 
 .input-block input {
 	@apply block w-full mt-[8px] pr-[15px] pl-[15px] font-[16px] leading-[40px] text-[#3b4465] text-lg bg-[#eef9fe] border-[1px] border-[#cddbef] rounded-md;
+
+	color: white;
+	background: transparent;
+	outline: none;
+}
+
+.input-block input::placeholder {
+	color: rgba(219, 219, 219, 0.829)
 }
 
 .form [type="submit"] {

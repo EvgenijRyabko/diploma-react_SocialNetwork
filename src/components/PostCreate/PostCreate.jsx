@@ -15,7 +15,7 @@ function PostCreate({ postCreate, setPostCreate = (f) => f, onPostCreate = (f) =
       />
       <button
         type="button"
-        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        className="w-4/6 place-self-center bg-transparent hover:text-amber-400 hover:border-amber-400 duration-300 font-semibold py-2 px-4 border rounded"
         onClick={() => onPostCreate()}
       >
         Опубликовать
