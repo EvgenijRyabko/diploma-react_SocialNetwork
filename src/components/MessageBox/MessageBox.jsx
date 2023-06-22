@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { getMessages } from '../../store/actions/dialogsActions';
-import { getUserById } from '../../store/actions/usersActions';
 import Message from './Message/Message';
 
 function MessageBox({ dialogId }) {
@@ -22,6 +21,7 @@ function MessageBox({ dialogId }) {
         messages.map((el, id) => (
           <Message
             key={id}
+            id={el.source_id}
             name={el.name}
             photo={el.photo}
             text={el.text}

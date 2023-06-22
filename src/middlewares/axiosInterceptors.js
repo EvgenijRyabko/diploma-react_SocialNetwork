@@ -2,8 +2,6 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
 
-var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
-
 // Show message before user has been exited from account
 // getPopup :: () -> void
 const getPopup = async () => {
@@ -13,6 +11,8 @@ const getPopup = async () => {
     title: 'Ваша сессия истекла!',
     html: `Для того что-бы обезопасить ваши данные, ваша сессия была прервана.
     Вы будете возвращены на страницу авторизации через <b></b> секунд.`,
+    background: '#607d8b',
+    color: 'white',
     timer: 5000, // 5 seconds
     timerProgressBar: true,
     didOpen: () => {

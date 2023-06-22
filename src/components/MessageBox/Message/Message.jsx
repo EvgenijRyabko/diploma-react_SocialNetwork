@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import defaultAvatar from '../../../assets/defaultAvatar.svg';
+import { getUserById } from '../../../store/actions/usersActions';
 import parseDate from '../../../utils/parseDate';
 
-function Message({ fromMe = false, name, text, createdAt }) {
+function Message({ fromMe = false, id, name, text, createdAt }) {
+  const dispatch = useDispatch();
+  const [photo, setPhoto] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const res = await dispatch(getUserById(id));
+
+      setPhoto(res?.profile_img ? `${import.meta.env.VITE_APP_STORAGE}${res.profile_img}` : null);
+    })();
+  }, [id]);
+
   return (
     <div className="my-2">
       {fromMe === true ? (
@@ -13,7 +26,7 @@ function Message({ fromMe = false, name, text, createdAt }) {
             <p className="text-xl">{text}</p>
           </div>
           <img
-            src={defaultAvatar}
+            src={photo || defaultAvatar}
             alt="none"
             className="w-[150px] h-[150px] rounded-[50%] border-2 border-slate-100 place-self-center"
           />

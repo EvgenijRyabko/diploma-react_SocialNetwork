@@ -19,6 +19,7 @@ export const getUserById = (id) => async (dispatch) => {
     dispatch({ type: usersActions.GET_USER_BY_ID });
     const response = await axios.get(`/api/users/${id}`);
     dispatch({ type: usersActions.GET_USER_BY_ID_SUCCESS, payload: response.data[0] });
+    return response.data[0];
   } catch (e) {
     dispatch({
       type: usersActions.GET_USER_BY_ID_ERROR,

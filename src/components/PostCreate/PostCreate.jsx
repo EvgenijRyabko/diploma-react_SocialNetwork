@@ -10,6 +10,7 @@ function PostCreate({ postCreate, setPostCreate = (f) => f, onPostCreate = (f) =
       />
       <textarea
         value={postCreate.text}
+        maxLength={200}
         onChange={(e) => setPostCreate({ ...postCreate, text: e.target.value })}
         className="w-4/6 min-h-[200px] place-self-center bg-transparent border-2 rounded-md outline-none px-2"
       />
