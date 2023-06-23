@@ -13,6 +13,7 @@ const getPopup = async () => {
     Вы будете возвращены на страницу авторизации через <b></b> секунд.`,
     background: '#607d8b',
     color: 'white',
+    iconColor: 'white',
     timer: 5000, // 5 seconds
     timerProgressBar: true,
     didOpen: () => {

@@ -1,14 +1,53 @@
 import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import Cookies from 'universal-cookie';
+import { sendMessage } from '../../store/actions/dialogsActions';
 import ImageCrop from '../ImageCrop/ImageCrop';
 import parseDate from '../../utils/parseDate';
 import defaultAvatar from '../../assets/defaultAvatar.svg';
 import classes from './UserInfo.module.css';
 
 function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => f }) {
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
   const modalRef = useRef();
+
+  const userId = cookies.get('id-user');
 
   const showModal = () => {
     modalRef.current.classList.add('active');
+  };
+
+  const onSendMessage = async () => {
+    const res = await Swal.fire({
+      title: 'Введите сообщение',
+      input: 'textarea',
+      color: 'white',
+      background: '#607d8b',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      cancelButtonColor: '#f43f5e',
+      confirmButtonColor: '#10b981',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Сообщение не должно быть пустым!';
+        }
+      },
+      preConfirm: (text) => {
+        dispatch(sendMessage(userId, userData.id, text));
+      },
+    });
+
+    if (res.isConfirmed) {
+      Swal.fire({
+        timer: 2000,
+        showConfirmButton: false,
+        background: '#607d8b',
+        icon: 'success',
+      });
+    }
   };
 
   return (
@@ -28,6 +67,15 @@ function UserInfo({ userData, userImage, isLoading, isOwner, setAvatar = (f) => 
             onClick={showModal}
           >
             Изменить фото
+          </button>
+        )}
+        {isOwner || (
+          <button
+            type="button"
+            className="py-2 hover:text-amber-400 duration-300"
+            onClick={onSendMessage}
+          >
+            Написать сообщение
           </button>
         )}
       </div>

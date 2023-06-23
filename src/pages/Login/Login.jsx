@@ -2,12 +2,12 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import CryptoJS from 'crypto-js';
-import { rand } from 'random-bytes-js';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { encryptPass } from '../../utils/AES';
 import { signIn as signInAction, signUp as signUpAction } from '../../store/actions/authActions';
+import LoginForm from '../../components/Auth/LoginForm/LoginForm';
+import RegistrationForm from '../../components/Auth/RegistrationForm/RegistrationForm';
 import './Login.css';
-import { Preloader } from '../../components/Preloader/Preloader';
 
 function Login() {
   const [password, setPassword] = useState('');
@@ -16,7 +16,7 @@ function Login() {
   const signUp = useRef();
   const signIn = useRef();
 
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,25 +24,6 @@ function Login() {
   const cookies = ['auth-token', 'id-user'];
 
   const [, setCookie, removeCookie] = useCookies(cookies);
-
-  const encryptPass = (pass = '') => {
-    let iv = rand(32);
-
-    // If length bytes > 32 then trim to 32
-    if (iv.length > 32) iv = iv.slice(0, 32);
-
-    const AesKey = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_APP_API_KEY);
-    const byteIv = CryptoJS.enc.Hex.parse(iv);
-    const encryptedStringHex = CryptoJS.AES.encrypt(pass, AesKey, {
-      iv: byteIv,
-      mode: CryptoJS.mode.CBC,
-      format: CryptoJS.format.Hex,
-    }).ciphertext;
-
-    const hex = CryptoJS.enc.Hex.stringify(byteIv);
-
-    return `${hex}:${encryptedStringHex.toString()}`;
-  };
 
   // signIn :: (Event) -> void
   const onSignIn = async (e) => {
@@ -96,107 +77,30 @@ function Login() {
             ВХОД
             <span className="underline" />
           </button>
-          <form className="form form-login">
-            <fieldset>
-              <legend>Please, enter your email and password for login.</legend>
-              <div className="input-block">
-                <label htmlFor="signin-login">Логин</label>
-                <input
-                  value={login}
-                  id="signin-login"
-                  type="text"
-                  placeholder="Введите логин"
-                  minLength={6}
-                  onChange={(e) => setLogin(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-block">
-                <label htmlFor="signin-password">Пароль</label>
-                <input
-                  value={password}
-                  id="signin-password"
-                  type="password"
-                  placeholder="Введите пароль"
-                  minLength={6}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </fieldset>
-            <button
-              type="submit"
-              className="bg-transparent hover:text-amber-400 text-white text-lg font-bold py-2 px-4 rounded-md duration-300"
-              onClick={(e) => onSignIn(e)}
-            >
-              Войти
-            </button>
-            {error && (
-              <div className="error">
-                <div className="errorMessage">{error.error}</div>
-              </div>
-            )}
-          </form>
+          <LoginForm
+            login={login}
+            password={password}
+            error={error}
+            setLogin={setLogin}
+            setPassword={setPassword}
+            onSignIn={onSignIn}
+          />
         </div>
         <div ref={signUp} className="form-wrapper">
           <button type="button" className="switcher switcher-signup" onClick={switchPage}>
             РЕГИСТРАЦИЯ
             <span className="underline" />
           </button>
-          <form className="form form-signup">
-            <fieldset>
-              <legend>
-                Please, enter your email, password and password confirmation for sign up.
-              </legend>
-              <div className="input-block">
-                <label htmlFor="signup-name">Имя</label>
-                <input
-                  value={username}
-                  id="signup-name"
-                  type="text"
-                  placeholder="Введите имя пользователя"
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-block">
-                <label htmlFor="signup-login">Логин</label>
-                <input
-                  value={login}
-                  id="signup-login"
-                  type="text"
-                  placeholder="Введите логин"
-                  onChange={(e) => setLogin(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-block">
-                <label htmlFor="signup-password">Пароль</label>
-                <input
-                  value={password}
-                  id="signup-password"
-                  type="password"
-                  placeholder="Введите пароль"
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </fieldset>
-            <button
-              type="submit"
-              className="bg-transparent hover:text-amber-400 text-white text-lg font-bold py-2 px-4 rounded-md duration-300"
-              onClick={(e) => {
-                onSignUp(e);
-              }}
-            >
-              Создать
-            </button>
-            {error && (
-              <div className="error">
-                <div className="errorMessage">{error.error}</div>
-              </div>
-            )}
-          </form>
+          <RegistrationForm
+            username={username}
+            login={login}
+            password={password}
+            error={error}
+            setUsername={setUsername}
+            setLogin={setLogin}
+            setPassword={setPassword}
+            onSignUp={onSignUp}
+          />
         </div>
       </div>
 
