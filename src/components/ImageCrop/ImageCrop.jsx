@@ -56,9 +56,12 @@ function ImageCrop({ modalRef, userData, setAvatar = (f) => f }) {
       crop.height,
     );
 
+    // eslint-disable-next-line no-promise-executor-return
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg'));
     changeProfilePhoto(blob);
     modalRef.current.classList.remove('active');
+    setSrc(null);
+    inputRef.current.value = null;
   };
 
   return (
